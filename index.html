@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌸 MeuDia — Produtividade com Estilo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar">
+      <div class="sidebar-logo">🌸 MeuDia</div>
+      <div class="sidebar-tagline">Produtividade com Carinho</div>
+
+      <div class="sidebar-date">
+        <div class="day" id="sidebarDay">20</div>
+        <div class="weekday" id="sidebarWeekday">Segunda-feira</div>
+        <div class="month" id="sidebarMonth">Abril 2026</div>
+      </div>
+
+      <div class="sidebar-section">Navegação</div>
+      <nav>
+        <a href="#" class="active" onclick="showPage('dashboard', this)">
+          <span class="icon">🏠</span> Início
+        </a>
+        <a href="#" onclick="showPage('tasks', this)">
+          <span class="icon">✅</span> Tarefas
+        </a>
+        <a href="#" onclick="showPage('schedule', this)">
+          <span class="icon">📅</span> Agenda
+        </a>
+        <a href="#" onclick="showPage('habits', this)">
+          <span class="icon">🔥</span> Hábitos
+        </a>
+        <a href="#" onclick="showPage('pomodoro', this)">
+          <span class="icon">🍅</span> Pomodoro
+        </a>
+
+        <div class="sidebar-section">Extras</div>
+        <a href="#" onclick="showPage('conquistas', this)">
+          <span class="icon">🏆</span> Conquistas
+        </a>
+        <a href="#" onclick="showPage('settings', this)">
+          <span class="icon">⚙️</span> Configurações
+        </a>
+      </nav>
+
+      <div class="xp-sidebar">
+        <div class="xp-label">
+          <span>✨ XP do Dia</span>
+          <span id="xpLabel">0 / 100</span>
+        </div>
+        <div class="xp-bar-wrap">
+          <div class="xp-bar-fill" id="xpBar" style="width: 0%"></div>
+        </div>
+        <div class="level" id="levelLabel">Nível 1 — Iniciante 🌱</div>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN ==================== -->
+    <main id="main">
+      <!-- ======= DASHBOARD ======= -->
+      <div id="page-dashboard" class="section-page active">
+        <div class="page-header">
+          <div>
+            <h1>
+              <span class="greeting-emoji" id="greetingEmoji">☀️</span
+              ><span id="greetingText">Bom dia!</span>
+            </h1>
+            <p id="greetingDate">Hoje é Segunda-feira, 20 de Abril de 2026</p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal()">
+            + Nova Tarefa
+          </button>
+          <label class="theme-switch">
+            <input type="checkbox" id="themeToggle" onchange="toggleTheme()" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Barra de Progresso Principal -->
+        <div class="progress-hero">
+          <div style="flex: 1">
+            <h2>⚡ Progresso de Hoje</h2>
+            <p id="progressSubtitle">
+              Você concluiu <strong id="doneCount">0</strong> de
+              <strong id="totalCount">0</strong> tarefas. Continue assim!
+            </p>
+            <div class="big-bar-wrap">
+              <div class="big-bar-fill" id="bigBarFill" style="width: 0%"></div>
+            </div>
+            <div class="bar-percent">
+              <span id="bigBarPct">0%</span>
+              <span>Meta diária</span>
+            </div>
+            <div class="stats-row" style="margin-top: 12px">
+              <div class="stat-pill">
+                ✅ <span id="stat-done">0</span> Concluídas
+              </div>
+              <div class="stat-pill">
+                ⏳ <span id="stat-pending">0</span> Pendentes
+              </div>
+              <div class="stat-pill">
+                🔥 <span id="stat-streak">0</span> Dias seguidos
+              </div>
+              <div class="stat-pill">
+                ⭐ <span id="stat-xp">0</span> XP Total
+              </div>
+            </div>
+          </div>
+          <div class="trophy-area">
+            <div class="trophy-circle" id="trophyIcon">🌱</div>
+            <div class="trophy-label" id="trophyLabel">Iniciante</div>
+          </div>
+        </div>
+
+        <!-- Grid: Humor + Hidratação + Foco -->
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">😊</span> Humor de Hoje
+            </div>
+            <div class="mood-options">
+              <button
+                class="mood-btn"
+                onclick="setMood(this, '😔')"
+                title="Triste"
+              >
+                😔
+              </button>
+              <button
+                class="mood-btn"
+                onclick="setMood(this, '😐')"
+                title="Normal"
+              >
+                😐
+              </button>
+              <button
+                class="mood-btn"
+                onclick="setMood(this, '🙂')"
+                title="Bem"
+              >
+                🙂
+              </button>
+              <button
+                class="mood-btn"
+                onclick="setMood(this, '😄')"
+                title="Ótimo"
+              >
+                😄
+              </button>
+              <button
+                class="mood-btn"
+                onclick="setMood(this, '🤩')"
+                title="Incrível"
+              >
+                🤩
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">💧</span> Hidratação
+            </div>
+            <div class="water-cups" id="waterCups"></div>
+            <div
+              style="
+                font-size: 0.75rem;
+                color: var(--text-muted);
+                margin-top: 8px;
+                font-weight: 700;
+              "
+            >
+              <span id="waterCount">0</span>/8 copos hoje
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">🎯</span> Foco do Dia
+            </div>
+            <div class="focus-word-area">
+              <div class="focus-word" id="focusWord">Determinação</div>
+              <div class="focus-quote" id="focusQuote">
+                "Pequenos passos constantes chegam a grandes destinos."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid: Mini Agenda + Hábitos Rápidos -->
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">📅</span> Agenda de Hoje
+            </div>
+            <div class="schedule-list" id="miniSchedule"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">🔥</span> Hábitos Rápidos
+            </div>
+            <div class="habits-grid" id="miniHabits"></div>
+          </div>
+        </div>
+
+        <!-- Tarefas -->
+        <div class="card tasks-card">
+          <div
+            class="card-title"
+            style="justify-content: space-between; margin-bottom: 10px"
+          >
+            <span><span class="emoji">✅</span> Minhas Tarefas</span>
+            <button class="btn btn-primary btn-sm" onclick="openModal()">
+              + Adicionar
+            </button>
+          </div>
+          <div class="task-filters">
+            <button
+              class="filter-btn active"
+              onclick="filterTasks('todas', this)"
+            >
+              Todas
+            </button>
+            <button class="filter-btn" onclick="filterTasks('pendente', this)">
+              Pendentes
+            </button>
+            <button class="filter-btn" onclick="filterTasks('concluida', this)">
+              Concluídas
+            </button>
+            <button class="filter-btn" onclick="filterTasks('alta', this)">
+              🔴 Alta
+            </button>
+            <button class="filter-btn" onclick="filterTasks('media', this)">
+              🟡 Média
+            </button>
+            <button class="filter-btn" onclick="filterTasks('baixa', this)">
+              🟢 Baixa
+            </button>
+          </div>
+          <div id="taskList"></div>
+        </div>
+      </div>
+
+      <!-- ======= TAREFAS ======= -->
+      <div id="page-tasks" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>✅ Gerenciar Tarefas</h1>
+            <p>Organize todas as suas tarefas</p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal()">
+            + Nova Tarefa
+          </button>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <span class="emoji">📋</span> Lista Completa
+          </div>
+          <div class="task-filters">
+            <button
+              class="filter-btn active"
+              onclick="filterTasks('todas', this)"
+            >
+              Todas
+            </button>
+            <button class="filter-btn" onclick="filterTasks('pendente', this)">
+              Pendentes
+            </button>
+            <button class="filter-btn" onclick="filterTasks('concluida', this)">
+              Concluídas
+            </button>
+            <button class="filter-btn" onclick="filterTasks('alta', this)">
+              🔴 Alta
+            </button>
+            <button class="filter-btn" onclick="filterTasks('media', this)">
+              🟡 Média
+            </button>
+            <button class="filter-btn" onclick="filterTasks('baixa', this)">
+              🟢 Baixa
+            </button>
+          </div>
+          <div id="taskListFull"></div>
+        </div>
+      </div>
+
+      <!-- ======= AGENDA ======= -->
+      <div id="page-schedule" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>📅 Agenda do Dia</h1>
+            <p>Horários de refeições, treinos e intervalos</p>
+          </div>
+          <button class="btn btn-primary" onclick="openScheduleModal()">
+            + Adicionar Horário
+          </button>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <span class="emoji">🕐</span> Seus Horários
+          </div>
+          <div class="schedule-list" id="fullSchedule"></div>
+        </div>
+      </div>
+
+      <!-- ======= HÁBITOS ======= -->
+      <div id="page-habits" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>🔥 Rastreador de Hábitos</h1>
+            <p>Construa rotinas poderosas</p>
+          </div>
+          <button class="btn btn-primary" onclick="openHabitModal()">
+            + Novo Hábito
+          </button>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">📆</span> Hábitos da Semana
+            </div>
+            <div id="fullHabits"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">🏅</span> Sequências
+            </div>
+            <div id="streaksArea"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= POMODORO ======= -->
+      <div id="page-pomodoro" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>🍅 Timer Pomodoro</h1>
+            <p>Foque por blocos de tempo</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div class="card" style="text-align: center">
+            <div class="card-title" style="justify-content: center">
+              <span class="emoji">⏱️</span> Temporizador
+            </div>
+            <div class="timer-mode">
+              <button
+                class="mode-btn active"
+                onclick="setMode('pomodoro', this)"
+                id="modePomodoro"
+              >
+                Foco 25min
+              </button>
+              <button
+                class="mode-btn"
+                onclick="setMode('short', this)"
+                id="modeShort"
+              >
+                Pausa 5min
+              </button>
+              <button
+                class="mode-btn"
+                onclick="setMode('long', this)"
+                id="modeLong"
+              >
+                Pausa Longa
+              </button>
+            </div>
+            <div class="timer-ring">
+              <svg width="120" height="120">
+                <circle
+                  class="timer-ring-bg"
+                  cx="60"
+                  cy="60"
+                  r="52"
+                  fill="none"
+                  stroke-width="8"
+                />
+                <circle
+                  class="timer-ring-fill"
+                  cx="60"
+                  cy="60"
+                  r="52"
+                  fill="none"
+                  stroke-width="8"
+                  id="timerRingFill"
+                  stroke-dasharray="326.7"
+                  stroke-dashoffset="0"
+                />
+              </svg>
+              <div class="timer-inner" id="timerDisplay">25:00</div>
+            </div>
+            <div class="timer-btns">
+              <button
+                class="timer-btn start"
+                id="timerStartBtn"
+                onclick="toggleTimer()"
+              >
+                ▶ Iniciar
+              </button>
+              <button class="timer-btn reset" onclick="resetTimer()">
+                ↺ Reset
+              </button>
+            </div>
+            <div
+              style="
+                margin-top: 14px;
+                font-size: 0.78rem;
+                color: var(--text-muted);
+                font-weight: 700;
+              "
+            >
+              Sessões hoje: <strong id="pomSessions">0</strong>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">📊</span> Histórico do Dia
+            </div>
+            <div
+              id="pomHistory"
+              style="font-size: 0.82rem; color: var(--text-muted)"
+            >
+              <div style="text-align: center; padding: 30px 0">
+                <span style="font-size: 2rem">🍅</span><br />
+                Nenhuma sessão ainda.<br />Comece seu primeiro Pomodoro!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= CONQUISTAS ======= -->
+      <div id="page-conquistas" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>🏆 Conquistas</h1>
+            <p>Suas medalhas e troféus</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <span class="emoji">🎖️</span> Coleção de Medalhas
+          </div>
+          <div class="achievements-grid" id="achievementsGrid"></div>
+        </div>
+      </div>
+
+      <!-- ======= CONFIGURAÇÕES ======= -->
+      <div id="page-settings" class="section-page">
+        <div class="page-header">
+          <div>
+            <h1>⚙️ Configurações</h1>
+            <p>Personalize seu MeuDia</p>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <span class="emoji">🎯</span> Meta Diária de Tarefas
+            </div>
+            <div class="form-group">
+              <label class="form-label">Número de tarefas para 100%</label>
+              <input
+                class="form-input"
+                type="number"
+                id="settingGoal"
+                value="5"
+                min="1"
+                max="50"
+                onchange="saveSettings()"
+              />
+            </div>
+            <div class="form-group" style="margin-top: 12px">
+              <label class="form-label">Nome de usuário</label>
+              <input
+                class="form-input"
+                type="text"
+                id="settingName"
+                placeholder="Seu nome..."
+                value="Usuário"
+                onchange="saveSettings()"
+              />
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="emoji">💾</span> Dados</div>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <button class="btn btn-ghost" onclick="exportData()">
+                📤 Exportar Dados (JSON)
+              </button>
+              <button class="btn btn-ghost" onclick="clearData()">
+                🗑️ Limpar Todos os Dados
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================== MODAL: NOVA TAREFA ==================== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOut(event)">
+      <div class="modal">
+        <div class="modal-title">✨ Nova Tarefa</div>
+        <div class="modal-form">
+          <div class="form-group">
+            <label class="form-label">Nome da Tarefa *</label>
+            <input
+              class="form-input"
+              type="text"
+              id="taskNameInput"
+              placeholder="O que você precisa fazer?"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Categoria</label>
+              <select class="form-input" id="taskCategoryInput">
+                <option value="trabalho">💼 Trabalho</option>
+                <option value="pessoal">💖 Pessoal</option>
+                <option value="saude">💪 Saúde</option>
+                <option value="estudo">📚 Estudo</option>
+                <option value="outro">🎨 Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Prioridade</label>
+              <select class="form-input" id="taskPriorityInput">
+                <option value="alta">🔴 Alta</option>
+                <option value="media" selected>🟡 Média</option>
+                <option value="baixa">🟢 Baixa</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Horário (opcional)</label>
+              <input class="form-input" type="time" id="taskTimeInput" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">XP ao concluir</label>
+              <select class="form-input" id="taskXpInput">
+                <option value="5">⭐ 5 XP (fácil)</option>
+                <option value="10" selected>⭐⭐ 10 XP (médio)</option>
+                <option value="20">⭐⭐⭐ 20 XP (difícil)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Observações (opcional)</label>
+            <input
+              class="form-input"
+              type="text"
+              id="taskNoteInput"
+              placeholder="Algum detalhe importante..."
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-primary" onclick="addTask()">
+            ✅ Adicionar Tarefa
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MODAL: HORÁRIO ==================== -->
+    <div
+      class="modal-overlay"
+      id="scheduleModalOverlay"
+      onclick="closeScheduleModalOut(event)"
+    >
+      <div class="modal">
+        <div class="modal-title">📅 Adicionar Horário</div>
+        <div class="modal-form">
+          <div class="form-group">
+            <label class="form-label">Nome do Evento</label>
+            <input
+              class="form-input"
+              type="text"
+              id="schedNameInput"
+              placeholder="Ex: Almoço, Academia, Intervalo..."
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Horário Início</label>
+              <input class="form-input" type="time" id="schedStartInput" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Horário Fim</label>
+              <input class="form-input" type="time" id="schedEndInput" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo</label>
+            <select class="form-input" id="schedTypeInput">
+              <option value="refeicao">🍽️ Refeição</option>
+              <option value="treino">🏋️ Treino / Academia</option>
+              <option value="intervalo">☕ Intervalo / Pausa</option>
+              <option value="work">💼 Trabalho / Estudo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emoji (opcional)</label>
+            <input
+              class="form-input"
+              type="text"
+              id="schedEmojiInput"
+              placeholder="Ex: 🥗 🏃 ☕"
+              maxlength="4"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeScheduleModal()">
+            Cancelar
+          </button>
+          <button class="btn btn-primary" onclick="addScheduleItem()">
+            📅 Adicionar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MODAL: HÁBITO ==================== -->
+    <div
+      class="modal-overlay"
+      id="habitModalOverlay"
+      onclick="closeHabitModalOut(event)"
+    >
+      <div class="modal">
+        <div class="modal-title">🔥 Novo Hábito</div>
+        <div class="modal-form">
+          <div class="form-group">
+            <label class="form-label">Nome do Hábito</label>
+            <input
+              class="form-input"
+              type="text"
+              id="habitNameInput"
+              placeholder="Ex: Meditar, Beber água, Ler 30min..."
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emoji</label>
+            <input
+              class="form-input"
+              type="text"
+              id="habitEmojiInput"
+              placeholder="🧘 💧 📖"
+              maxlength="4"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeHabitModal()">
+            Cancelar
+          </button>
+          <button class="btn btn-primary" onclick="addHabit()">
+            🔥 Criar Hábito
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== NOTIFICAÇÃO ==================== -->
+    <div class="notification" id="notification">
+      <span id="notifIcon">✅</span>
+      <span id="notifText">Tarefa concluída!</span>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="js/app.js"></script>
+  </body>
+</html>
